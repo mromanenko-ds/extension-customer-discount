@@ -1,0 +1,21 @@
+query RunInput {
+  cart {
+    lines {
+      id
+      quantity
+      cost {
+        amountPerQuantity {
+          amount
+        }
+      }
+    }
+    buyerIdentity {
+      customer {
+        id
+        metafield(key: "customer_discount", namespace: "custom") {
+          value
+        }
+      }
+    }
+  }
+}
