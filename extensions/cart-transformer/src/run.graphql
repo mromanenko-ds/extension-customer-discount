@@ -10,6 +10,7 @@ query RunInput {
       }
     }
     buyerIdentity {
+      isAuthenticated
       customer {
         id
         metafield(key: "customer_discount", namespace: "custom") {

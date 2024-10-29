@@ -22,10 +22,11 @@ const APPLY_DISCOUNT = {
  */
 
 export function run(input) {
+  const isAuth = input.cart.buyerIdentity?.isAuthenticated;
   const customer = input.cart.buyerIdentity?.customer;
   const discountPercent = customer.metafield?.value;
 
-  if (customer && discountPercent && discountPercent > 0) {
+  if (isAuth && discountPercent && discountPercent > 0) {
     input.cart.lines.forEach(line => {
       const discountAmount = line.cost.amountPerQuantity.amount * (discountPercent / 100);
       const discountedPrice = line.cost.amountPerQuantity.amount - discountAmount;
@@ -34,9 +35,6 @@ export function run(input) {
         "update": {
           "cartLineId": line.id,
           "price": {
-            "compareAtAmountPerQuantity": {
-              "amount": line.cost.amountPerQuantity.amount,
-            },
             "adjustment": {
               "fixedPricePerUnit": {
                 "amount": discountedPrice,
